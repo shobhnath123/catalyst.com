@@ -1,0 +1,152 @@
+.sidebar{
+    background:#f3f5fa;
+    width:65px;
+    min-height:100vh;
+    text-align:center;
+    padding:10px;
+    position:fixed;
+    
+}
+.main_content{
+    margin-left:65px;
+}
+body{
+    font-family:sans-serif;   
+    color:#183247;
+    background-color: #ebeef0;
+}
+.logo{
+    width:40px;
+}
+.ticket_user_image{
+    width:45px;
+}
+.all_tickets_list,.right_sidebar{
+    height:80vh;
+}
+.sidebar .menu_wrapper{
+    padding-top:20px;
+}
+.sidebar .menu_wrapper ul{
+    padding-left:0;
+}
+.ticket_summary_card{
+    box-shadow:0 1px 0 0 #cfd7df;
+}
+.ticket_summary_card:hover *{
+    color:#2c5cc5;
+}
+.ticket_summary_column:first-child .ticket_summary_card{
+    border-left:3px solid #fd7e14;
+}
+.ticket_summary_column:nth-child(2) .ticket_summary_card{
+    border-left:3px solid #dc3545;
+}
+.ticket_summary_column:nth-child(3) .ticket_summary_card{
+    border-left:3px solid #198754;
+}
+.ticket_summary_column:nth-child(4) .ticket_summary_card{
+    border-left:3px solid #0d6efd;
+}
+.ticket_summary_column:nth-child(5) .ticket_summary_card{
+    border-left:3px solid #adb5bd;
+}
+.ticket_summary_column:last-child .ticket_summary_card{
+    border-left:3px solid #6f42c1;
+}
+.survey_card{
+    min-height:40px
+}
+.survey_count{
+    color:#999;
+}
+.notification:hover p{
+    background-color:#eee;
+}
+.notifications_container{
+    max-height:300px;
+}
+#notifications_wrapper{
+    right:0;
+    z-index:99;
+    display:none;
+    width:280px;
+}
+.tickets_container{
+    width:250px;
+}
+.sidebar .menu_items_wrapper a{
+    color:#5f72a2;
+    font-size:22px;
+    padding:10px;
+}
+.sidebar .menu_items_wrapper{
+    padding:7px 0; 
+    margin-bottom:5px;
+}
+.sidebar .menu_items_wrapper:hover a,.sidebar .menu_items_wrapper a:active{
+    background-color:#94202a;
+    color:#fff;
+    border-radius:5px;
+}
+.main_body_wrapper .card{
+    box-shadow:0 1px 0 0 #cfd7df;
+}
+.analysis_boxes{
+    min-height:300px;
+    max-height:300px;
+}
+.scrollable_area{
+    overflow:auto;
+}
+#todo_textarea{
+    resize: none;
+}
+.todos:hover .actions{
+    visibility:visible;
+}
+.actions{
+    visibility:hidden;
+}
+.btn-light{
+    background-color:#fff;
+}
+.ticket_area .icon_wrapper{
+    width:35px;
+    height:35px;
+}
+.mail_area .icon_wrapper,.header .header_right_area .icon_wrapper{
+    width:30px;
+    height:30px;
+}
+.contact_details .icon_wrapper{
+    width:50px;
+    height:50px;
+}
+.mail_area .email_id{
+    background-color:#eeecec;
+}
+.mail_area .mail_body{
+    min-height:150px;
+}
+.bg-success{
+    background-color:#00bb73 !important;
+}
+.btn-success{
+    background-color:#00bb73;
+}
+.contact_details,.properties{
+    min-height:100vh;
+}
+.accordion-button{
+    padding:0.875rem;
+    font-size:0.875rem;
+    border:none;
+}
+.btn-success.disabled{
+    background-color:#aae7d4;
+    border:none;
+}
+.main_body_wrapper select{
+    font-size:12px !important;
+}

@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <style>
+        .sidebar{
+    background:#f3f5fa;
+    width:65px;
+    min-height:100vh;
+    text-align:center;
+    padding:10px;
+    position:fixed;
+    
+}
+#todo-list{
+    padding:0;
+    margin:0;
+}
+li.todo-item:hover{
+    background:#d9ecf0;
+}
+#todo-list li .button-container{
+    visibility:hidden;
+}
+#todo-list li:hover .button-container{
+    visibility: visible;
+}
+
+.fw-bold{
+    font-weight: 600 !important;
+}
+.main_content{
+    margin-left:65px;
+}
+body{
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size:0.8rem;
+    color:#183247;
+    background-color: #ebeef0;
+}
+
+.logo{
+    width:40px;
+}
+.ticket_user_image{
+    width:45px;
+}
+.ticket_details_wrapper,#right_sidebar,#activity{
+    height:76vh;
+}
+#right_sidebar,#activity{
+    width:300px;
+}
+.sidebar .menu_wrapper{
+    padding-top:20px;
+}
+.sidebar .menu_wrapper ul{
+    padding-left:0;
+}
+.notification:hover p{
+    background-color:#eee;
+}
+.notifications_container{
+    max-height:300px;
+}
+#notifications_wrapper{
+    right:0;
+    z-index:99;
+    display:none;
+    width:280px;
+}
+.notification_container{
+    width:250px;
+    height:300px;
+    overflow: auto;
+}
+.sidebar .menu_items_wrapper a{
+    color:#5f72a2;
+    font-size:22px;
+    padding:10px;
+}
+.sidebar .menu_items_wrapper{
+    padding:7px 0; 
+    margin-bottom:5px;
+}
+.sidebar .menu_items_wrapper:hover a,.sidebar .menu_items_wrapper a:active{
+    background-color:#94202a;
+    color:#fff;
+    border-radius:5px;
+}
+.main_body_wrapper .card,.ticket_user_card{
+    box-shadow:0 1px 0 0 #cfd7df;
+}
+.btn-light{
+    background-color:#fff;
+}
+.mail_area .icon_wrapper,.header .header_right_area .icon_wrapper{
+    width:30px;
+    height:30px;
+}
+
+.main_body_wrapper select{
+    font-size:13px !important;
+}
+.badge_danger{
+    background-color: #ffecf0;
+    color: #c82124;
+    border: 1px solid #ffd0d6;
+}
+.badge_success{
+    background-color: #e3f5ef;
+    color: #198754;
+    border: 1px solid #adddcb;
+}
+.badge_warning{
+    background-color: #fffaec;
+    color: #ffc107;
+    border: 1px solid #f3d685;
+}
+.badge_secondary{
+    background-color: #eeeeee;
+    color: #6c757d;
+    border: 1px solid #7c7c7c;
+}
+.badge_info{
+    background-color: #dff5fa;
+    color: #0dcaf0;
+    border: 1px solid #9de8f7;
+}
+.ticket_user_card{
+    display:none;
+    width:300px;
+    z-index: 99;
+}
+.ticket_user:hover  .ticket_user_card{
+    display:block;
+}
+a{
+    text-decoration: none;
+    text-shadow: none;
+}
+.customer_service_actions_wrapper .btn{
+    background-color:#f4f6f8;
+}
+.customer_service_actions_wrapper a:hover{
+    background-color:#e2e6ec;
+}
+
+/* custom select box */
+.custom-select {
+  position: relative;
+  width: 200px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.select-header {
+  padding: 5px;
+  display: flex;
+  font-size:small;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+.activities_bar a,.color_dark{
+    color:#183247;
+}
+
+.select-options {
+  position: absolute;
+  list-style: none;
+  z-index:99;
+  padding: 5px;
+  margin: 0;
+  background-color: #fff;
+  box-shadow: 0 2px 18px 0 rgba(18,52,77,.16), 0 2px 4px 0 rgba(18,52,77,.06);
+  border: 1px solid #ccc;
+  display: none;
+  border-radius:5px;
+  width: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.custom-select.active .select-options {
+  display: block;
+}
+
+
+.select-options li {
+  position: relative;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.select-options li:hover{
+    background:#e5f2fd;
+}
+.select-options li .icon {
+  display: none;
+  margin-right: 5px;
+}
+
+.custom-select.active .select-options li .icon {
+  display: inline-block;
+}
+
+.priority_icon{
+    border-radius:3px;width:8px;height:8px;display:inline-block;vertical-align: middle;margin-right:5px;
+}
+.issue_user img{
+    width:34px;
+}
+.issue_actions_wrapper{
+    display:none;
+}
+.customer_Service_wrapper:hover .issue_actions_wrapper, .issue_wrapper:hover .issue_actions_wrapper{
+    display:block;
+}
+.issue_wrapper,.customer_Service_wrapper{
+    border-radius:10px;
+    padding:10px;
+}
+.customer_Service_wrapper,.user_log .description{
+    background-color: #f1f1f1;
+}
+.user_log img{
+    width:25px;
+}
+.user_name img{
+    width:40px;
+}
+.btn{
+    font-size:12px;
+}
+.btn#dropdownNotifications::before{
+    font-size:14px;
+}
+.sticky-top{
+    z-index:99;
+}
+#activity .card:hover{
+    border-color:#183247;
+}
+.log_time_btn{
+    background-color:#183247;
+}
+.log_time_area{
+    background:#ebeff3;
+}
+.response_status_success{
+    width:10px;height:10px;display: inline-block;outline:1px dashed #198754; background-color: #198754; outline-offset:1px;
+}
+.response_status_danger{
+    width:10px;height:10px;display: inline-block;outline:1px dashed #c82124; background-color: #c82124; outline-offset:1px;
+}
+.contacts_submenu{
+    display:none;
+    color:#183247;
+    z-index:99999;
+    left:70%;
+    top:70%;
+}
+.contacts_submenu p:hover{
+    background-color: #eee;
+}
+.menu .contacts:hover .contacts_submenu{
+    display: block;
+}
+/* For Webkit browsers (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb:hover{
+    background-color: #888;
+}
+::-webkit-scrollbar-thumb {
+  background-color: #bbbbbb;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #eee;
+}
+
+/* For Firefox */
+::-moz-scrollbar {
+  width: 8px;
+}
+
+::-moz-scrollbar-thumb {
+    background-color: #888;
+}
+
+::-moz-scrollbar-thumb {
+  background-color: #bbb;
+  border-radius: 4px;
+}
+
+::-moz-scrollbar-track {
+  background-color: #eee;
+}
+
+/* For Internet Explorer and Microsoft Edge */
+::-ms-scrollbar {
+  width: 8px;
+}
+
+::-ms-scrollbar-thumb {
+    background-color: #888;
+}
+
+::-ms-scrollbar-thumb {
+  background-color: #bbb;
+  border-radius: 4px;
+}
+
+::-ms-scrollbar-track {
+  background-color: #eee;
+}
+
+    </style>
+</head>
+<body>
+    <section class="ui_wrapper">
+        <div class="template_wrapper d-flex p-0 m-0">
+        <div class="sidebar shadow-sm">
+            <div class="logo_wrapper">
+                <img class="logo" src="/Catalyst/images/groupedmn_favicon.png" alt="logo">
+            </div>
+            <div class="menu_wrapper">
+                <ul class="menu">
+                    <li class="menu_items_wrapper">
+                        <a href="" class="bi bi-speedometer2"></a>
+                    </li>
+                    <li class="menu_items_wrapper">
+                        <a href="" class="bi bi-ticket-detailed"></a>
+                    </li>
+                    <li class="menu_items_wrapper">
+                        <a href="" class="contacts bi bi-person-bounding-box position-relative">
+                            <div class="contacts_submenu card bg-light position-absolute right-0 p-2 fs-6">
+                                <p class="px-2 py-1 m-0">Contacts</p>
+                                <p class="px-2 py-1 m-0">Company</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="menu_items_wrapper">
+                        <a href="" class="bi bi-book"></a>
+                    </li>
+                    <li class="menu_items_wrapper">
+                        <a href="" class="bi bi-chat-right-text"></a>
+                    </li>
+                    <li class="menu_items_wrapper">
+                        <a href="" class="bi bi-bar-chart"></a>
+                    </li>
+                    <li class="menu_items_wrapper">
+                        <a href="" class="bi bi-gear"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main_content w-100">
+            <div class="header d-flex justify-content-between align-items-center p-3 shadow-sm border-bottom" style="background-color:#fff;">
+                  <div class="header_left_area me-2 position-relative">
+                  
+                      <span class=" me-1">
+                        <a class="btn btn-sm btn-light border bi bi-funnel me-2" type="button" id="dropdownHeaderFilter" data-bs-toggle="dropdown" aria-expanded="false">
+                        
+                        </a>
+                        <ul class="tickets_container shadow dropdown-menu" aria-labelledby="dropdownHeaderFilter">
+                        <li><a class="dropdown-item" href="#">My Open Tickets</a></li>
+                        <li><a class="dropdown-item" href="#">My Overdue Tickets</a></li>
+                        <li><a class="dropdown-item" href="#">Urgent And High Priority Tickets</a></li>
+                        </ul>
+                    </span>
+                    <span class="navbar-brand me-0"><a href="" class="small text-decoration-none ">All Tickets</a></span>
+                    <i class="bi bi-caret-right-fill text-secondary"></i>
+                    <span class="header_ticket_count fw-bold">1</span>
+                    </div>
+                    <div class="header_right_area">
+                        
+                        <span class="dropdown me-2">
+                            <a class="btn btn-sm btn-light border dropdown-toggle" type="button" id="dropdownButtonNew" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i href="" class="bi bi-plus-square me-2"></i>New
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownButtonNew">
+                            <li><a class="dropdown-item" href="#">New Ticket</a></li>
+                            <li><a class="dropdown-item" href="#">New User</a></li>
+                            <li><a class="dropdown-item" href="#">New Contact</a></li>
+                            <li><a class="dropdown-item" href="#">New Company</a></li>
+                            </ul>
+                        </span>
+                        <span class=" me-2">
+                            <a class="btn btn-light border-0 bi-bell text-dark me-3 position-relative" type="button" id="dropdownNotifications" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                  99+</span>
+                            </a>
+                            <ul class="notification_container shadow dropdown-menu pt-0" aria-labelledby="dropdownNotifications">
+                            <li class="card-header d-flex justify-content-between"><span>Notifications</span><span class="small"><a href="" class="mark_read">Mark as read</a></span></li>
+                            <li><a class="dropdown-item" href="#">Notifications 1</a></li>
+                            <li><a class="dropdown-item" href="#">Notifications 2</a></li>
+                            <li><a class="dropdown-item" href="#">Notifications 3</a></li>
+                            <li><a class="dropdown-item" href="#">Notifications 4</a></li>
+                            <li><a class="dropdown-item" href="#">Notifications 5</a></li>
+                            <li><a class="dropdown-item" href="#">Notifications 6</a></li>
+                            <li><a class="dropdown-item" href="#">Notifications 7</a></li>
+                            <li><a class="dropdown-item" href="#">Notifications 8</a></li>
+                            <li><a class="dropdown-item" href="#">Notifications 9</a></li>
+                            <li><a class="dropdown-item" href="#">Notifications 10</a></li>
+                            </ul>
+                        </span>
+                        
+                        <div class="icon_wrapper user_profile d-inline-block rounded-3">
+                            <img src="/Catalyst/images/g5GGSDC.png" alt="" class="user_icon w-100">
+                        </div>
+                    </div>
+            </div>
+            <div class="sub_header d-flex align-items-center justify-content-between p-3 border-bottom" style="background-color:#f8f9fa;">
+                <div class="left_subheader_area d-flex">
+                        
+                       <div class="actions_wrapper">
+                        <div class="d-flex me-2">
+                        <div class="border rounded me-2">
+                            <a href="" class="bi bi-reply btn btn-sm btn-light fw-bold"> Reply</a>
+                        </div>
+                        <div class="border rounded me-2">
+                            <a href="" class="bi bi-file-text btn btn-sm btn-light fw-bold"> Add note</a>
+                        </div>
+                        <div class="border rounded me-2">
+                            <a href="" class="bi bi-arrow-90deg-right btn btn-sm btn-light fw-bold"> Forward</a>
+                        </div>
+                        <div class="border rounded me-2">
+                            <a href="" class="bi bi-check2-circle btn btn-sm btn-light fw-bold"> Close</a>
+                        </div>
+                        <div class="border rounded me-2">
+                            <a href="" class="bi bi-trash btn btn-sm btn-light fw-bold"> Delete</a>
+                        </div>
+                        </div>
+                       </div>
+                    </div>
+                    <div class="right_subheader_area d-flex">
+                        <div class="border rounded me-2">
+                            <a href="" class="bi bi-clock-history btn btn-sm btn-light fw-bold"> Show activities</a>
+                        </div>
+                        <span class="me-2">
+                            <a href="" class="bi bi-chevron-left btn border btn-sm btn-light fw-bold"></a>
+                            <a href="" class="bi bi-chevron-right btn border btn-sm btn-light fw-bold"></a>
+                        </span>
+                        <button class="btn btn-sm btn-light border bi bi-box-arrow-in-left" title="Activity Toggle" onclick="myFunction(this)" id="activity_toggle"></button>
+                    </div>
+            </div>
+            
+        <div class="main_body_wrapper">
+            <div class="d-flex">
+                <div class="ticket_details_wrapper pe-1 overflow-auto">
+                    <div class="issue_detail bg-light">
+                        <div class="border-bottom ps-5 p-2"><p class="mb-1"><span class="badge_danger ticket_status rounded p-1 small">Overdue</span></p></div>
+                        <div class="ticket_issue_container ms-2 me-2">
+                            <div class="ticket_header sticky-top bg-light px-3 py-2 pb-0">
+                                <div class="d-flex align-items-center">
+                                    <div><span class="bi bi-telephone fs-5"></span></div>
+                                    <div>
+                                        <h4 class="ticket_subject_heading px-2 mx-3 fs-5 fw-bold">Email address change</h4>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ms-5 ps-3 small">
+                                <span>Created by <b>Freshdesk</b></span></div>
+                            <div class="ticket_issue_wrapper pb-3">
+                                <div>
+                                    <div class="issue_wrapper mb-2">
+                                        <div class="d-flex issue_details_header p-2">
+                                            <div class="issue_user">
+                                                <img class="rounded bg-secondary" src="/Catalyst/images/g5GGSDC.png" alt="">
+                                            </div>
+                                            <div class="w-100">
+                                                <div class="ticket_details_items_header d-flex justify-content-between px-2">
+                                                    <div class="">
+                                                    <div class="ticket_user fs-6 d-inline-block">
+                                                        <a class=" text-decoration-none" href="" >Sarah James</a>
+                                                        <div class="ticket_user_card card position-absolute ">
+                                                            <div class="card-body d-flex align-items-center">
+                                                                <img src="/Catalyst/images/g5GGSDC.png" alt="" class="ticket_user_image me-3">
+                                                                <div class="ticket_user_details pb-2">
+                                                                    <h6 class="username fw-bold">User Name</h6>
+                                                                    <a href="" class="small">View tickets</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-footer">
+                                                                <div class="user_email_wrapper">
+                                                                    <a href="" class="small text-muted">
+                                                                        <i class="bi bi-envelope me-2"></i>
+                                                                        user.name@email.com
+                                                                    </a>
+                                                                </div>
+                                                                <div class="user_phone_wrapper">
+                                                                    <a href="" class="small text-muted">
+                                                                        <i class="bi bi-telephone me-2"></i>
+                                                                        987654345678
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div> 
+                                                    <div class="ms-1 d-inline-block">reported via phone.</div>
+                                                    <div class="created_time small fst-italic text-secondary">11 days ago <span class="timeago">(Sun, 30 Jul 2023 at 7:46 AM)</span></div>
+                                                    </div>
+                                                    
+                                                    <div class="issue_actions_wrapper text-end">
+                                                        <a href="" class="btn border-primary btn-sm bi bi-pencil"></a>
+                                                        <a href="" class="btn border-primary btn-sm bi bi-arrow-90deg-right"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="issue_content_wrapper ps-5 pe-2 pt-2 pb-3">
+                                            <p>
+                                                Hi,
+                                                <br><br>
+                                                I need to update my email address. I want to know if I'll lose access to my account if I change it. I've added quite a few products to my cart and don't want to look for them again.
+                                                <br><br>
+                                                It would be great to continue using this account with my new email address. Please let me know if that's possible.
+                                                <br><br>
+                                                Regards,
+                                                <br>
+                                                Sarah James
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="customer_Service_wrapper mb-2">
+                                        <div class="d-flex issue_details_header p-2">
+                                            <div class="issue_user">
+                                                <img class="rounded bg-secondary" src="/Catalyst/images/g5GGSDC.png" alt="">
+                                            </div>
+                                            <div class="w-100">
+                                                <div class="ticket_details_items_header d-flex justify-content-between px-2">
+                                                    <div class="">
+                                                    <div class="ticket_user fs-6 d-inline-block">
+                                                        <a class=" text-decoration-none" href="" >Customer Service</a>
+                                                        <div class="ticket_user_card card position-absolute ">
+                                                            <div class="card-body d-flex align-items-center">
+                                                                <img src="/Catalyst/images/g5GGSDC.png" alt="" class="ticket_user_image me-3">
+                                                                <div class="ticket_user_details pb-2">
+                                                                    <h6 class="username fw-bold">Customer Service</h6>
+                                                                    <a href="" class="small">View tickets</a>
+                                                                </div>
+                                                            </div>
+                                                            <div class="card-footer">
+                                                                <div class="user_email_wrapper">
+                                                                    <a href="" class="small text-muted">
+                                                                        <i class="bi bi-envelope me-2"></i>
+                                                                        user.name@email.com
+                                                                    </a>
+                                                                </div>
+                                                                <div class="user_phone_wrapper">
+                                                                    <a href="" class="small text-muted">
+                                                                        <i class="bi bi-telephone me-2"></i>
+                                                                        987654345678
+                                                                    </a>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div> 
+                                                    <div class="ms-1 d-inline-block">reported via phone.</div>
+                                                    <div class="created_time small fst-italic text-secondary">11 days ago <span class="timeago">(Sun, 30 Jul 2023 at 7:46 AM)</span></div>
+                                                    </div>
+                                                    
+                                                    <div class="issue_actions_wrapper text-end">
+                                                        <a href="" class="btn border-primary btn-sm bi bi-pencil"></a>
+                                                        <a href="" class="btn border-primary btn-sm bi bi-arrow-90deg-right"></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="issue_content_wrapper ps-5 pe-2 pt-2 pb-3">
+                                            <p>
+                                                Hi,
+                                                <br><br>
+                                                I need to update my email address. I want to know if I'll lose access to my account if I change it. I've added quite a few products to my cart and don't want to look for them again.
+                                                <br><br>
+                                                It would be great to continue using this account with my new email address. Please let me know if that's possible.
+                                                <br><br>
+                                                Regards,
+                                                <br>
+                                                Sarah James
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="customer_Service_wrapper ">
+                                        <div class="d-flex issue_details_header p-2">
+                                            <div class="issue_user">
+                                                <img class="rounded bg-secondary" src="/Catalyst/images/g5GGSDC.png" alt="">
+                                            </div>
+                                            <div class="w-100">
+                                                <div class="d-flex px-2 customer_service_actions_wrapper">
+                                                    <div class="border rounded me-2">
+                                                        <a href="" class="bi bi-reply btn btn-sm fw-bold"> Reply</a>
+                                                    </div>
+                                                    <div class="border rounded me-2">
+                                                        <a href="" class="bi bi-file-text btn btn-sm fw-bold"> Add note</a>
+                                                    </div>
+                                                    <div class="border rounded me-2">
+                                                        <a href="" class="bi bi-arrow-90deg-right btn btn-sm fw-bold"> Forward</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                
+                </div>
+                <div id="right_sidebar" class="card px-3 justify-content-between overflow-auto pt-2">
+                    <div class="response_status_wrapper">
+                        <span class="response_status_danger me-2 rounded-circle"></span>First Response Due
+                        <p class="small">by Mon, Jul 31,2023 5:00 PM</p>
+                    </div>
+                    <div class="response_status_wrapper">
+                        <span class="response_status_success me-2 rounded-circle"></span>Resolution Due
+                        <p class="small">by Mon, Jul 31,2023 5:00 PM</p>
+                    </div>
+                    <div class="filters_wrapper">
+                        <h6 class="small sticky-top p-2 fw-bold mt-1" style="background-color: #fff;">PROPERTIES</h6>
+                    <form action="">
+                        <div class="mb-3">
+                            <label for="tags">Tags</label>
+                            <input id="tags" type="text" class="form-control form-control-sm">
+                        </div>
+                        <div class="mb-3">
+                            <label for="select_type" class="small">Type</label>
+                        <select name="" id="select_type" class="form-select form-select-sm">
+                            <option value="">--Select Type--</option>
+                            <option value="">Question</option>
+                            <option value="">Agent 2</option>
+                        </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="select_status" class="small">Status</label>
+                        <select name="" id="select_creation" class="form-select form-select-sm">
+                            <option value="">--Select status--</option>
+                            <option value="">Open</option>
+                            <option value="">Closed</option>
+                            <option value="">Stuck</option>
+                        </select>
+                        </div>
+                       <div class="mb-3">
+                        <label for="select_priority" class="small">Priority</label>
+                        <select name="" id="select_creation" class="form-select form-select-sm">
+                            <option value="">--Select priority--</option>
+                            <option value="">Low</option>
+                            <option value="">Medium</option>
+                            <option value="">High</option>
+                        </select>
+                       </div>
+                        <div class="mb-3">
+                            <label for="select_group" class="small">Group</label>
+                        <select name="" id="select_group" class="form-select form-select-sm">
+                            <option value="">--Select Group--</option>
+                            <option value="">Customer Support</option>
+                            <option value="">option 2</option>
+                        </select>
+                        </div>
+                    </form>
+                    </div>
+                    <div class="apply_btn_wrapper bottom-0 bg-light position-sticky">
+                        <a href="" class="btn btn-sm btn-secondary w-100">Apply</a>
+                    </div>
+                </div>
+                <div id="activity" class="card overflow-auto bg-transparent p-1 border-0">
+                    <div class="card mb-2" id="contactCard">
+                        <div class="card-header px-2 border-0 small">
+                            <i class="bi bi-info-lg fs-5"></i><span class="me-1 pe-1 border-end fw-bold">CONTACT DETAILS</span><span><a href="" class="text_decoration-none">Edit</a></span>
+                        </div>
+                        <div class="card-body">
+                            <div class="user_name mb-2">
+                                <img src="/Catalyst/images/g5GGSDC.png" alt="" class="me-1">
+                                <a href="">Sarah James</a>
+                            </div>
+                            <div class="mb-2">
+                                <p class="text-secondary mb-0">Email</p>
+                                <a href="mailto:user.name@email.com" class="fw-bold text-dark fst-italic text-decoration-none">user.name@email.com</a>
+                            </div>
+                            <div class="mb-2">
+                                <p class="text-secondary mb-0">Work phone</p>
+                                <a href="tel:0987654321" class="fw-bold text-dark text-decoration-none">0987654321</a>
+                            </div>
+                            <div class="mb-2">
+                                <a href="" class="text-decoration-none"><i class="bi bi-box-arrow-up-right me-1"></i>View more info</a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-2" id="timelogsCard">
+                        <div class="card-header px-2 border-0 small">
+                            <i class="bi bi-stopwatch me-1 fs-6"></i><span class="me-1 pe-1 fw-bold">TIME LOGS</span>
+                        </div>
+                        <div class="card-body py-3 px-2">
+                            <div class="p-2 log_time_area rounded-3">
+                                <p class="small">Start tracking the time you spend on this ticket</p>
+                                <p class="time_wrapper h4 color_dark">04h 00m 00s</p>
+                                <p><a href="" class="btn log_time_btn btn-sm text-light">Log time</a></p>
+                            </div>
+                            <div class="p-1">
+                                <p class="time_wrapper h4">02h 00m 00s</p>
+                                <a href="" class="text-decoration-none">Edit</a>
+                                <div class="user_log">
+                                    <div class="d-flex">
+                                    <div class="me-2 mt-3">
+                                        <img src="/Catalyst/images/g5GGSDC.png" alt="">
+                                    </div>
+                                    <div>
+                                        <h6 class="small m-0">Peter Antony</h6>
+                                        <p class="small">on Wed, 02 Aug, 2023</p>
+                                    </div>
+                                </div>
+                                    <p class="description p-2 rounded-2">Test 2</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card mb-2" id="todoCard">
+                        <div class="card-header px-2 border-0 small">
+                            <i class="bi bi-calendar4-week me-1 fs-6"></i><span class="me-1 pe-1 fw-bold">TO-DO</span>
+                        </div>
+                        <div class="card-body py-3 px-2">
+                            <div class="d-flex border-bottom">
+                                <button id="todo-add" onclick="pushData();" class="border-0 bg-transparent"><i class="bi bi-plus-circle fs-6 text-success"></i></button>
+                                <input class="w-100 border-0" type="text" name="todo-item" id="input-todo" placeholder="Add a to-do">
+                            </div>
+                            <ul id="todo-list">
+
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="activities_bar d-flex flex-column align-items-center px-1 py-3">
+                    <div class="activities_icon info_icon_wrapper mb-1">
+                        <a href="#contactCard" class="bi bi-info fw-bolder fs-2"></a>
+                    </div>
+                    <div class="activities_icon clock_icon_wrapper mb-3">
+                        <a href="#timelogsCard" class="bi bi-stopwatch fw-bolder fs-5"></a>
+                    </div>
+                    <div class="activities_icon calendar_icon_wrapper mb-3">
+                        <a href="#todoCard" class="bi bi-calendar4-week fw-bolder fs-5"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </section>
+
+    
+    <script>
+      // sidebar for ticket list
+      document.addEventListener("DOMContentLoaded", function() {
+    var activityToggle = document.getElementById("activity_toggle");
+    var activity = document.getElementById("activity");
+
+    activityToggle.addEventListener("click", function() {
+        if (activity.style.display === "block") {
+            activity.style.display = "none";
+            activityToggle.classList.add("bi-box-arrow-in-left");
+            activityToggle.classList.remove("bi-box-arrow-in-right");
+        } else {
+            activity.style.display = "block";
+            activityToggle.classList.add("bi-box-arrow-in-right");
+            activityToggle.classList.remove("bi-box-arrow-in-left");
+        }
+    });
+
+    // Close "activity" element on page load
+    activity.style.display = "none";
+});
+
+
+document.addEventListener("DOMContentLoaded", function() {
+    var activityIcons = document.querySelectorAll(".activities_icon");
+    var activity = document.querySelector("#activity");
+
+    activityIcons.forEach(function(icon) {
+        icon.addEventListener("click", function() {
+            activity.style.display = "block";
+        });
+    });
+});
+function pushData() {
+    var inputValue = document.getElementById("input-todo").value.trim();
+
+    if (inputValue !== "") {
+        var newTodo = document.createElement("li");
+        newTodo.classList.add("todo-item", "list-unstyled", "d-flex", "justify-content-between", "align-items-center", "ps-2", "mb-2");
+        newTodo.textContent = inputValue;
+
+        // Create edit and delete buttons with multiple classes
+        var editButton = document.createElement("button");
+        editButton.classList.add("edit-btn", "btn", "btn-sm", "btn-primary", "bi", "bi-pencil");
+        editButton.textContent = "";
+
+        var deleteButton = document.createElement("button");
+        deleteButton.classList.add("delete-btn", "btn-sm", "btn", "btn-danger", "bi", "bi-trash");
+        deleteButton.textContent = "";
+
+        // Create a container for buttons
+        var buttonContainer = document.createElement("div");
+        buttonContainer.classList.add("button-container");
+        buttonContainer.appendChild(editButton);
+        buttonContainer.appendChild(deleteButton);
+
+        // Append the container to the list item
+        newTodo.appendChild(buttonContainer);
+        document.getElementById("todo-list").appendChild(newTodo);
+
+        // Clear the input field after adding the item
+        document.getElementById("input-todo").value = "";
+    }
+}
+
+// jquery code
+// function pushData() {
+//     var inputValue = $("#input-todo").val().trim();
+
+//     if (inputValue !== "") {
+//         var newTodo = $("<li>").addClass("todo-item list-unstyled d-flex justify-content-between align-items-center ps-2 mb-2").text(inputValue);
+
+//         // Create edit and delete buttons with multiple classes
+//         var editButton = $("<button>").addClass("edit-btn btn btn-sm btn-primary bi bi-pencil").text("");
+//         var deleteButton = $("<button>").addClass("delete-btn btn-sm btn btn-danger bi bi-trash").text("");
+//         // Create a container for buttons
+//         var buttonContainer = $("<div>").addClass("button-container").append(editButton, deleteButton);
+
+//         // Append the container and text to the list item
+//         newTodo.append(buttonContainer);
+//         $("#todo-list").append(newTodo);
+
+//         // Clear the input field after adding the item
+//         $("#input-todo").val("");
+//     }
+// }
+
+
+
+      </script>
+</body>
+</html>

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        .sidebar{
+            background:#284255;
+            width:60px;
+            min-height:100vh;
+            text-align:center;
+            padding:10px;
+        }
+        .ui_wrapper{
+            font-family:sans-serif;
+            background-color: #ebeef0;
+        }
+        .logo{
+            width:40px;
+        }
+        .sidebar .menu_wrapper{
+            padding-top:20px;
+        }
+        .sidebar .menu_wrapper ul{
+            padding-left:0;
+        }
+        .sidebar .menu_items_wrapper a{
+            color:#fff;
+            font-size:22px;
+            padding:10px;
+        }
+        .sidebar .menu_items_wrapper{
+            padding:7px 0; 
+            margin-bottom:5px;
+        }
+        .sidebar .menu_items_wrapper:hover a{
+            background-color:#02b875;
+            border-radius:5px;
+        }
+        .btn-light{
+            background-color:#fff;
+        }
+        .ticket_area .icon_wrapper{
+            width:35px;
+            height:35px;
+        }
+        .mail_area .icon_wrapper,.header .header_right_area .icon_wrapper{
+            width:30px;
+            height:30px;
+        }
+        .contact_details .icon_wrapper{
+            width:50px;
+            height:50px;
+        }
+        .mail_area .email_id{
+            background-color:#eceeee;
+        }
+        .mail_area .mail_body{
+            min-height:150px;
+        }
+        .bg-success{
+            background-color:#00bb73 !important;
+        }
+        .btn-success{
+            background-color:#00bb73;
+        }
+        .contact_details,.properties{
+            min-height:100vh;
+        }
+        .accordion-button{
+            padding:0.875rem;
+            font-size:0.875rem;
+            border:none;
+        }
+        .btn-success.disabled{
+            background-color:#aae7d4;
+            border:none;
+        }
+    </style>
+</head>
+<body>
+    <section class="ui_wrapper">
+        <div class="template_wrapper d-flex p-0 m-0">
+        <div class="sidebar">
+            <div class="logo_wrapper">
+                <img class="logo" src="https://imgur.com/OMOEPVW.png" alt="logo">
+            </div>
+            <div class="menu_wrapper">
+                <ul class="menu">
+                    <li class="menu_items_wrapper">
+                        <a href="" class="bi bi-speedometer2"></a>
+                    </li>
+                    <li class="menu_items_wrapper">
+                        <a href="" class="bi bi-ticket-detailed"></a>
+                    </li>
+                    <li class="menu_items_wrapper">
+                        <a href="" class="bi bi-person-bounding-box"></a>
+                    </li>
+                    <li class="menu_items_wrapper">
+                        <a href="" class="bi bi-book"></a>
+                    </li>
+                    <li class="menu_items_wrapper">
+                        <a href="" class="bi bi-chat-right-text"></a>
+                    </li>
+                    <li class="menu_items_wrapper">
+                        <a href="" class="bi bi-bar-chart"></a>
+                    </li>
+                    <li class="menu_items_wrapper">
+                        <a href="" class="bi bi-gear"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main_content w-100">
+            <div class="header d-flex justify-content-between align-items-center p-3 shadow-sm border-bottom" style="background-color:#fff;">
+                  <div class="header_left_area me-2"><a class="navbar-brand text-primary me-0" href="#">Tickets</a>
+                    <i class="bi bi-caret-right-fill text-secondary"></i>
+                    <span class="header_ticket_count fw-bold">118</span></div>
+                    <div class="header_right_area">
+                        <a href="" class="btn btn-sm btn-light fw-bold border me-3"> Got some feedback?</a>
+                        <a href="" class="bi bi-search text-dark me-3"></a>
+                        <a href="" class="bi bi-plus-square text-secondary me-3"></a>
+                        <div class="icon_wrapper d-inline-block rounded-circle">
+                            <img src="https://imgur.com/g5GGSDC.png" alt="" class="user_icon w-100">
+                        </div>
+                    </div>
+            </div>
+            <div class="sub_header d-flex justify-content-between p-3 border-bottom" style="background-color:#f8f9fa;">
+                <div class="d-flex">
+                <div class="border rounded me-2">
+                    <a href="" class="bi bi-star btn btn-sm btn-light fw-bold"></a>
+                </div>
+                <div class="d-flex me-2">
+                    <span class="border rounded-start">
+                        <a href="" class="bi bi-reply btn btn-sm btn-light fw-bold"> Reply</a>
+                    </span>
+                    <span class="border border-start-0 border-end-0">
+                        <a href="" class="bi bi-file-text btn btn-sm btn-light fw-bold"> Add note</a>
+                    </span>
+                    <span class="border rounded-end">
+                        <a href="" class="bi bi-arrow-90deg-right btn btn-sm btn-light fw-bold"> Forward</a>
+                    </span>
+                </div>
+                <div class="border rounded me-2">
+                    <a href="" class="bi bi-check2-circle btn btn-sm btn-light fw-bold"> Close</a>
+                </div>
+                <div class="border rounded me-2">
+                    <a href="" class="bi bi-sign-merge-right btn btn-sm btn-light fw-bold"> Merge</a>
+                </div>
+                <div class="border rounded me-2">
+                    <a href="" class="bi bi-trash btn btn-sm btn-light fw-bold"> Delete</a>
+                </div>
+                <div class="border rounded me-2">
+                    <a href="" class="bi bi-three-dots-vertical btn btn-sm btn-light fw-bold"></a>
+                </div>
+            </div>
+            <div class="d-flex">
+                <div class="border rounded me-2">
+                    <a href="" class="bi bi-clock-history btn btn-sm btn-light fw-bold"> Show activities</a>
+                </div>
+                <div class="d-flex">
+                    <span class="border rounded-start">
+                        <a href="" class="bi bi-chevron-left btn btn-sm btn-light fw-bold"></a>
+                    </span>
+                    <span class="border border-start-0 border-end-0">
+                        <a href="" class="bi bi-three-dots-vertical btn btn-sm btn-light fw-bold"></a>
+                    </span>
+                    <span class="border rounded-end">
+                        <a href="" class="bi bi-chevron-right btn btn-sm btn-light fw-bold"></a>
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="d-flex">
+        <div class="w-50">
+            <div class="card ticket_area m-3">
+                <div class="card-header d-flex p-3" style="background-color:#f8f9fa;">
+                    <div class="me-3">
+                        <div class="icon_wrapper d-flex justify-content-center align-items-center rounded-circle bg-primary">
+                            <i class="bi bi-telephone text-light"></i>
+                        </div>
+                    </div>
+                    <div class="">
+                        <h5 class="m-0">Open</h5>
+                        <div><span class="small">First reponse due at 2:30 AM on Sat, 09 Sep</span>
+                        <span><a href="" class="bi bi-pencil-square btn btn-sm text-primary"> Change</a></span></div>
+                        <div><span class="tag badge bg-success">New</span> <a href="" class="small text-decoration-none">Add tags</a></div>
+                    </div>
+                </div>
+                <div class="card-body d-flex">
+                    <div class="me-3">
+                        <div class="icon_wrapper rounded-circle">
+                            <img src="https://imgur.com/g5GGSDC.png" alt="" class="user_icon w-100">
+                        </div>
+                    </div>
+                    <div class="w-100">
+                        <h4 class="fw-bold">When is my package going to arrive?</h4>
+                        <div class="issue_details d-flex justify-content-between text-secondary small">
+                            <div>
+                                <p class="m-0"><a href="" class="contact_name text-decoration-none">Danny Chung</a> reported an issue</p>
+                                <p>Created by: Akshara Sruthi</p>
+                            </div>
+                            <div class="">
+                                <span class="me-2">3 hours ago <i class="bi bi-three-dots-vertical"></i></span>
+                            </div>
+                        </div>
+                        <div class="mb-4">Can you give me an ETA on the delivery, please?</div>
+                    </div>
+                </div>
+            </div>
+            <div class="mail_area card m-3">
+                <div class="card-header d-flex align-items-center" style="background-color:#f8f9fa;">
+                    
+                        <div class="icon_wrapper rounded-circle me-2">
+                            <img src="https://imgur.com/g5GGSDC.png" alt="" class="user_icon w-100">
+                        </div>
+                        <div class="pe-2 border-end">
+                            <select class="select_icon border-0 bg-transparent small text-secondary" name="" id="">
+                                <option value="">File</option>
+                                <option value="">File1</option>
+                                <option value="">File2</option>
+                            </select>
+                        </div>
+                        <div>
+                            <select class="select_icon border-0 bg-transparent small text-secondary" name="" id="">
+                                <option value="">Not visible to user</option>
+                                <option value="">option2</option>
+                                <option value="">option3</option>
+                            </select>
+                        </div>
+                </div>
+                <div class="p-3 d-flex align-items-center border-bottom">
+                    <div class="me-2 small">Notify to:</div>
+                    <div class="email_ids_wrapper">
+                        <span class="email_id badge text-secondary"><a href="" class="bi bi-x text-secondary"></a>User Name (user@email.com)</span>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="mail_body small">
+                        Hello could you handle this please?
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div class="mail_footer_icons">
+                            <a href="" class="bi bi-paperclip text-secondary me-2"></a>
+                            <a href="" class="text-decoration-none text-secondary me-2">A</a>
+                            <a href="" class="bi bi-chat-left-quote text-secondary me-2"></a>
+                            <a href="" class="bi bi-book text-secondary me-2"></a>
+                        </div>
+                        <div class="mail_footer_buttonss">
+                            <a href="" class="btn btn-sm btn-light border">CANCEL</a>
+                            <span class="dropdown">
+                                <a class="btn btn-sm btn-success dropdown-toggle" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
+                                ADD NOTE
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                </ul>
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="w-50">
+            <div class="d-flex">
+                <div class="properties d-flex flex-column justify-content-between card rounded-0 w-50">
+                    <div class="p-3">
+                    <h6 class="fw-bold small mb-3">PROPERTIES</h6>
+                    <div>
+                        <label class="small" for="properties_type">Type</label>
+                            <select name="" id="properties_type" class="text-secondary form-select form-select-sm border-0 border-bottom pt-0 mb-3">
+                                <option value="">Select Value</option>
+                                <option value="">Option2</option>
+                                <option value="">Option3</option>
+                            </select>
+                        <label class="small" for="properties_status">Status<span class="text-danger fw-bolder">*</span></label>
+                            <select name="" id="properties_status" class="form-select form-select-sm border-0 border-bottom pt-0 mb-3">
+                                <option value="">Open</option>
+                                <option value="">Closed</option>
+                                <option value="">Stuck</option>
+                            </select>
+                        <label class="small" for="properties_priority">Priority</label>
+                            <select name="" id="properties_priority" class="form-select form-select-sm border-0 border-bottom pt-0 mb-3">
+                                <option value="">High</option>
+                                <option value="">Medium</option>
+                                <option value="">Low</option>
+                            </select>
+                        <label class="small" for="properties_status">Assign To</label>
+                            <select name="" id="properties_status" class="form-select form-select-sm border-0 border-bottom pt-0 mb-3">
+                                <option value="">--/--</option>
+                                <option value="">A</option>
+                                <option value="">B</option>
+                            </select>
+                    </div>
+                    </div>
+                    <div class="card-footer p-3">
+                        <a href="" class="btn btn-sm btn-success w-100 disabled">UPDATE</a>
+                    </div>
+                </div>
+                <div class="contact_details card rounded-0 w-50">
+                    <div class="p-3">
+                    <h6 class="fw-bold small mb-3">CONTACT DETAILS</h6>
+                    <div class="user_wrapper small">
+                    <div class="d-flex align-items-center">
+                    <div class="icon_wrapper rounded-circle me-2">
+                        <img src="https://imgur.com/g5GGSDC.png" alt="" class="user_icon w-100">
+                    </div>
+                    <a href="" class="text-decoration-none username">Danny Chung</a>
+                    </div>
+                        <div class="mb-4 mt-4">
+                            <p class="m-0 text-secondary">Email</p>
+                            <a href="mailto:user@email.co" class="fw-bold text-decoration-none text-dark" href="">user@email.co</a>
+                        </div>
+                        <p class="mb-1">Recent tickets</p>
+                        <div>
+                           <div class="d-flex">
+                            <div class="me-2"><i class="bi bi-ticket-detailed"></i></div>
+                            <div class="w-100 text-secondary"><a href="" class="text-decoration-none">Partnership Offer</a> #115
+                                <p>Status: <span class="text-dark">Open</span></p>
+                            </div>
+                           </div>
+                        </div>
+                        <div>
+                           <div class="d-flex">
+                            <div class="me-2"><i class="bi bi-ticket-detailed"></i></div>
+                            <div class="w-100 text-secondary"><a href="" class="text-decoration-none text-secondary">App is not working</a> #115
+                                <p>Status: <span class="text-dark">Closed</span></p>
+                            </div>
+                           </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="accordion_wrapper">
+                    <div class="accordion" id="contact_details_accordion">
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="contact_details_headingOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#contact_details_collapseOne" aria-expanded="false" aria-controls="collapseOne">
+                              TIME ENTRIES
+                            </button>
+                          </h2>
+                          <div id="contact_details_collapseOne" class="accordion-collapse collapse" aria-labelledby="contact_details_headingOne" data-bs-parent="#contact_details_accordion">
+                            <div class="accordion-body">
+                              Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim illo ducimus minima doloribus temporibus nesciunt similique libero repudiandae quae a.
+                            </div>
+                          </div>
+                        </div>
+                        <div class="accordion-item">
+                          <h2 class="accordion-header" id="contact_details_headingTwo">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#contact_details_collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                              TO DO
+                            </button>
+                          </h2>
+                          <div id="contact_details_collapseTwo" class="accordion-collapse collapse" aria-labelledby="contact_details_headingTwo" data-bs-parent="#contact_details_accordion">
+                            <div class="accordion-body">
+                              Lorem ipsum dolor sit amet consectetur adipisicing elit. Temporibus inventore quidem explicabo ullam accusamus cumque quos nihil dolores esse. Aliquid?
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                </div>
+                </div>
+                <div class="right_sidebar card rounded-0 text-center" style="width:8%;">
+                    <div class="sidebar_toggle mb-3 border-bottom">
+                        <a href="" class="btn btn-sm bi bi-layout-sidebar fs-5"></a>
+                    </div>
+                    <div class="info_icon_wrapper mb-1">
+                        <a href="" class="bi bi-info fw-bolder text-muted fs-2"></a>
+                    </div>
+                    <div class="clock_icon_wrapper mb-3">
+                        <a href="" class="bi bi-stopwatch fw-bolder text-muted fs-5"></a>
+                    </div>
+                    <div class="calendar_icon_wrapper mb-3">
+                        <a href="" class="bi bi-calendar4-week fw-bolder text-muted fs-5"></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+        </div>
+    </div>
+    </section>
+</body>
+</html>

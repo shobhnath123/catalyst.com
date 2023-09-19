@@ -1,0 +1,956 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <style>
+        .sidebar{
+    background:#f3f5fa;
+    width:65px;
+    min-height:100vh;
+    text-align:center;
+    padding:10px;
+    position:fixed;
+    
+}
+.main_content{
+    margin-left:65px;
+}
+body{
+    font-family:sans-serif;
+    font-size:95%;
+    color:#183247;
+    background-color: #ebeef0;
+}
+.logo{
+    width:40px;
+}
+.ticket_user_image{
+    width:45px;
+}
+.all_tickets_list,.right_sidebar{
+    height:76vh;
+}
+.sidebar .menu_wrapper{
+    padding-top:20px;
+}
+.sidebar .menu_wrapper ul{
+    padding-left:0;
+}
+.notification:hover p{
+    background-color:#eee;
+}
+.notifications_container{
+    max-height:300px;
+}
+#notifications_wrapper{
+    right:0;
+    z-index:99;
+    display:none;
+    width:280px;
+}
+.tickets_container{
+    width:250px;
+}
+.sidebar .menu_items_wrapper a{
+    color:#5f72a2;
+    font-size:22px;
+    padding:10px;
+}
+.sidebar .menu_items_wrapper{
+    padding:7px 0; 
+    margin-bottom:5px;
+}
+.sidebar .menu_items_wrapper:hover a,.sidebar .menu_items_wrapper a:active{
+    background-color:#94202a;
+    color:#fff;
+    border-radius:5px;
+}
+.main_body_wrapper .card,.ticket_user_card{
+    box-shadow:0 1px 0 0 #cfd7df;
+}
+.btn-light{
+    background-color:#fff;
+}
+.mail_area .icon_wrapper,.header .header_right_area .icon_wrapper{
+    width:30px;
+    height:30px;
+}
+
+.main_body_wrapper select{
+    font-size:13px !important;
+}
+.badge_danger{
+    background-color: #ffecf0;
+    color: #c82124;
+    border: 1px solid #ffd0d6;
+}
+.badge_success{
+    background-color: #e3f5ef;
+    color: #198754;
+    border: 1px solid #adddcb;
+}
+.badge_warning{
+    background-color: #fffaec;
+    color: #ffc107;
+    border: 1px solid #f3d685;
+}
+.badge_secondary{
+    background-color: #eeeeee;
+    color: #6c757d;
+    border: 1px solid #7c7c7c;
+}
+.badge_info{
+    background-color: #dff5fa;
+    color: #0dcaf0;
+    border: 1px solid #9de8f7;
+}
+.ticket_user_card{
+    display:none;
+    width:300px;
+    z-index: 99;
+}
+.ticket_user:hover .ticket_user_card{
+    display:block;
+}
+a{
+    text-decoration: none;
+    text-shadow: none;
+}
+.actions_wrapper{
+    display:none;
+}
+
+
+/* custom select box */
+.custom-select {
+  position: relative;
+  width: 200px;
+  cursor: pointer;
+  margin-bottom: 5px;
+}
+
+.select-header {
+  padding: 5px;
+  display: flex;
+  font-size:small;
+  /* justify-content: space-between; */
+  align-items: center;
+}
+
+.select-options {
+  position: absolute;
+  list-style: none;
+  z-index:99;
+  padding: 5px;
+  margin: 0;
+  background-color: #fff;
+  box-shadow: 0 2px 18px 0 rgba(18,52,77,.16), 0 2px 4px 0 rgba(18,52,77,.06);
+  border: 1px solid #ccc;
+  display: none;
+  border-radius:5px;
+  width: 100%;
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.custom-select.active .select-options {
+  display: block;
+}
+
+
+.select-options li {
+  position: relative;
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.select-options li:hover{
+    background:#e5f2fd;
+}
+.select-options li .icon {
+  display: none;
+  margin-right: 5px;
+}
+
+.custom-select.active .select-options li .icon {
+  display: inline-block;
+}
+
+.priority_icon{
+    border-radius:3px;width:8px;height:8px;display:inline-block;vertical-align: middle;margin-right:5px;
+}
+    </style>
+</head>
+<body>
+    <section class="ui_wrapper">
+        <div class="template_wrapper d-flex p-0 m-0">
+        <div class="sidebar shadow-sm">
+            <div class="logo_wrapper">
+                <img class="logo" src="/Catalyst/images/groupedmn_favicon.png" alt="logo">
+            </div>
+            <div class="menu_wrapper">
+                <ul class="menu">
+                    <li class="menu_items_wrapper">
+                        <a href="" class="bi bi-speedometer2"></a>
+                    </li>
+                    <li class="menu_items_wrapper">
+                        <a href="" class="bi bi-ticket-detailed"></a>
+                    </li>
+                    <li class="menu_items_wrapper">
+                        <a href="" class="bi bi-person-bounding-box"></a>
+                    </li>
+                    <li class="menu_items_wrapper">
+                        <a href="" class="bi bi-book"></a>
+                    </li>
+                    <li class="menu_items_wrapper">
+                        <a href="" class="bi bi-chat-right-text"></a>
+                    </li>
+                    <li class="menu_items_wrapper">
+                        <a href="" class="bi bi-bar-chart"></a>
+                    </li>
+                    <li class="menu_items_wrapper">
+                        <a href="" class="bi bi-gear"></a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="main_content w-100">
+            <div class="header d-flex justify-content-between align-items-center p-3 shadow-sm border-bottom" style="background-color:#fff;">
+                  <div class="header_left_area me-2 position-relative">
+                  
+                      <span class=" me-2">
+                        <a class="btn btn-sm btn-light border bi bi-funnel me-2" type="button" id="dropdownHeaderFilter" data-bs-toggle="dropdown" aria-expanded="false">
+                        
+                        </a>
+                        <ul class="tickets_container shadow dropdown-menu" aria-labelledby="dropdownHeaderFilter">
+                        <li><a class="dropdown-item" href="#">My Open Tickets</a></li>
+                        <li><a class="dropdown-item" href="#">My Overdue Tickets</a></li>
+                        <li><a class="dropdown-item" href="#">Urgent And High Priority Tickets</a></li>
+                        </ul>
+                    </span>
+                    <span class="navbar-brand me-0">All Tickets</span>
+                    </div>
+                    <div class="header_right_area">
+                        
+                        <span class="dropdown me-2">
+                            <a class="btn btn-sm btn-light border dropdown-toggle" type="button" id="dropdownButtonNew" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i href="" class="bi bi-plus-square me-2"></i>New
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="dropdownButtonNew">
+                            <li><a class="dropdown-item" href="#">New Ticket</a></li>
+                            <li><a class="dropdown-item" href="#">New User</a></li>
+                            <li><a class="dropdown-item" href="#">New Contact</a></li>
+                            <li><a class="dropdown-item" href="#">New Company</a></li>
+                            </ul>
+                        </span>
+                        <span class=" me-2">
+                            <a class="btn btn-light border-0 bi-bell text-dark me-3 position-relative" type="button" id="dropdownNotifications" data-bs-toggle="dropdown" aria-expanded="false">
+                                  <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                                  99+</span>
+                            </a>
+                            <ul class="tickets_container shadow dropdown-menu pt-0" aria-labelledby="dropdownNotifications">
+                            <li class="card-header d-flex justify-content-between"><span>Notifications</span><span class="small"><a href="" class="mark_read">Mark as read</a></span></li>
+                            <li><a class="dropdown-item" href="#">Notifications 1</a></li>
+                            <li><a class="dropdown-item" href="#">Notifications 2</a></li>
+                            <li><a class="dropdown-item" href="#">Notifications 3</a></li>
+                            <li><a class="dropdown-item" href="#">Notifications 4</a></li>
+                            <li><a class="dropdown-item" href="#">Notifications 5</a></li>
+                            <li><a class="dropdown-item" href="#">Notifications 6</a></li>
+                            <li><a class="dropdown-item" href="#">Notifications 7</a></li>
+                            <li><a class="dropdown-item" href="#">Notifications 8</a></li>
+                            <li><a class="dropdown-item" href="#">Notifications 9</a></li>
+                            <li><a class="dropdown-item" href="#">Notifications 10</a></li>
+                            </ul>
+                        </span>
+                        
+                        <div class="icon_wrapper user_profile d-inline-block rounded-3">
+                            <img src="/Catalyst/images/g5GGSDC.png" alt="" class="user_icon w-100">
+                        </div>
+                    </div>
+            </div>
+            <div class="sub_header d-flex align-items-center justify-content-between p-3 border-bottom" style="background-color:#f8f9fa;">
+                <div class="left_subheader_area d-flex">
+                        <input type="checkbox" name="" id="masterCheckbox" class="me-2 checkbox float-start">
+                       <div class="sort_check_wrapper">
+                        <span class="text-secondary">Sort By:</span>
+                        <select name="" id="" class="sort_filter border-0 bg-transparent">
+                            <option value="">Ascending</option>
+                            <option value="">Descending</option>
+                            <option value="">Option 3</option>
+                       </select>
+                       </div>
+                       <div class="actions_wrapper">
+                        <div class="d-flex me-2">
+                        <div class="border rounded me-2">
+                            <a href="" class="bi bi-person-plus btn btn-sm btn-light fw-bold"> Assign</a>
+                        </div>
+                        <div class="border rounded me-2">
+                            <a href="" class="bi bi-check2-circle btn btn-sm btn-light fw-bold"> Close</a>
+                        </div>
+                        <div class="border rounded me-2">
+                            <a href="" class="bi bi-trash btn btn-sm btn-light fw-bold"> Delete</a>
+                        </div>
+                        </div>
+                       </div>
+                    </div>
+                    <div class="right_subheader_area">
+                        <span>
+                            <a href="" class="bi bi-chevron-left btn border btn-sm btn-light fw-bold"></a>
+                            <a href="" class="bi bi-chevron-right btn border btn-sm btn-light fw-bold"></a>
+                            </span>
+                        <button class="btn btn-sm btn-light border bi bi-box-arrow-in-right" title="Sidebar Toggle" onclick="myFunction(this)" id="toggle_right_sidebar"></button>
+                    </div>
+            </div>
+            
+        <div class="main_body_wrapper">
+            <div class="d-flex">
+                <div class="all_tickets_list p-2 w-100 overflow-auto">
+                    <div class="ticket card p-3 mb-2">
+                        <div class="d-flex align-items-center">
+                            <div class="ticket_issue_wrapper d-flex align-items-center w-75">
+                                <input class="form-check-input me-3 checkbox" type="checkbox" value="" id="todo_item_1">
+                                <img src="/Catalyst/images/g5GGSDC.png" alt="" class="ticket_user_image me-3">
+                                <div class="ticket_issue w-100">
+                                    <p class="mb-1"><span class="badge_success ticket_status rounded px-1 small">Resolved</span></p>
+                                    <h6 class="mb-1">Recieved a broken TV</h6>
+                                    <p class="m-0 small text-secondary">
+                                        <div class="bi bi-envelope d-inline-block pe-2 border-end ticket_user position-relative">
+                                            Sarah James
+                                            <div class="ticket_user_card card position-absolute ">
+                                                <div class="card-body d-flex align-items-center">
+                                                    <img src="/Catalyst/images/g5GGSDC.png" alt="" class="ticket_user_image me-3">
+                                                    <div class="ticket_user_details pb-2">
+                                                        <h5 class="username fw-bold">User Name</h5>
+                                                        <a href="" class="small">View tickets</a>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="user_email_wrapper">
+                                                        <a href="" class="small text-muted">
+                                                            <i class="bi bi-envelope me-2"></i>
+                                                            user.name@email.com
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="created_on">Created 4 days ago</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="ticket_options w-25">
+                                <div class="issue issue-1">
+
+                                    <!-- priority -->
+                                    <div class="priority custom-select">
+                                        <div class="select-header">
+                                            <span><i class="priority_icon bg-secondary me-1"></i>Select priority</span>
+                                          <i class="bi bi-chevron-down ms-1"></i>
+                                        </div>
+                                        <ul class="select-options shadow-lg mt-2">
+                                          <li data-value="Low"><span class="priority_icon icon bg-success"></span> Low</li>
+                                          <li data-value="Medium" class="selected"><span class="priority_icon icon bg-primary"></span> Medium</li>
+                                          <li data-value="High"><span class="priority_icon icon bg-warning"></span> High</li>
+                                          <li data-value="Urgent"><span class="priority_icon icon bg-danger"></span> Urgent</li>
+                                        </ul>
+                                      </div>
+
+
+                                      <!-- Customer satisfaction -->
+                                    <div class="customer_satisfaction custom-select">
+                                        <div class="select-header">
+                                            <i class="bi bi-person-plus me-1"></i><span>Select satisfaction</span>
+                                          <i class="bi bi-chevron-down ms-1"></i>
+                                        </div>
+                                        <ul class="select-options shadow-lg mt-2">
+                                          <li data-value="Option 1"> Option 1</li>
+                                          <li data-value="Option 2"> Option 2</li>
+                                          <li data-value="Option 3"> Option 3</li>
+                                          <li data-value="Option 4"> Option 4</li>
+                                        </ul>
+                                      </div>
+                                      <!-- status -->
+                                    <div class="status custom-select">
+                                        <div class="select-header">
+                                            <i class="bi bi-activity me-1"></i><span>Select status</span>
+                                          <i class="bi bi-chevron-down ms-1"></i>
+                                        </div>
+                                        <ul class="select-options shadow-lg mt-2">
+                                          <li data-value="Open"> Open</li>
+                                          <li data-value="Closed"> Closed</li>
+                                          <li data-value="Pending" class="selected"> Pending</li>
+                                          <li data-value="Resolved"> Resolved</li>
+                                          <li data-value="Stuck"> Stuck</li>
+                                        </ul>
+                                      </div>
+                                      
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ticket card p-3 mb-2">
+                        <div class="d-flex align-items-center">
+                            <div class="ticket_issue_wrapper d-flex align-items-center w-75">
+                                <input class="form-check-input checkbox me-3" type="checkbox" value="" id="todo_item_1">
+                                <img src="/Catalyst/images/g5GGSDC.png" alt="" class="ticket_user_image me-3">
+                                <div class="ticket_issue w-100">
+                                    <p class="mb-1"><span class="badge_danger ticket_status rounded px-1 small">Overdue</span></p>
+                                    <h6 class="mb-1">Recieved a broken TV</h6>
+                                    <p class="m-0 small text-secondary">
+                                        <div class="bi bi-envelope d-inline-block pe-2 border-end ticket_user position-relative">
+                                            Sarah James
+                                            <div class="ticket_user_card card position-absolute ">
+                                                <div class="card-body d-flex align-items-center">
+                                                    <img src="/Catalyst/images/g5GGSDC.png" alt="" class="ticket_user_image me-3">
+                                                    <div class="ticket_user_details pb-2">
+                                                        <h5 class="username fw-bold">User Name</h5>
+                                                        <a href="" class="small">View tickets</a>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="user_email_wrapper">
+                                                        <a href="" class="small text-muted">
+                                                            <i class="bi bi-envelope me-2"></i>
+                                                            user.name@email.com
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="created_on">Created 4 days ago</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="ticket_options w-25">
+                                <div class="issue issue-2">
+
+                                    <!-- priority -->
+                                    <div class="priority custom-select">
+                                        <div class="select-header">
+                                            <span><i class="priority_icon bg-secondary me-1"></i>Select priority</span>
+                                          <i class="bi bi-chevron-down ms-1"></i>
+                                        </div>
+                                        <ul class="select-options shadow-lg mt-2">
+                                          <li data-value="Low" class="selected"><span class="priority_icon icon bg-success"></span> Low</li>
+                                          <li data-value="Medium"><span class="priority_icon icon bg-primary"></span> Medium</li>
+                                          <li data-value="High"><span class="priority_icon icon bg-warning"></span> High</li>
+                                          <li data-value="Urgent"><span class="priority_icon icon bg-danger"></span> Urgent</li>
+                                        </ul>
+                                      </div>
+
+
+                                      <!-- Customer satisfaction -->
+                                    <div class="customer_satisfaction custom-select">
+                                        <div class="select-header">
+                                            <i class="bi bi-person-plus me-1"></i><span>Select satisfaction</span>
+                                          <i class="bi bi-chevron-down ms-1"></i>
+                                        </div>
+                                        <ul class="select-options shadow-lg mt-2">
+                                          <li data-value="Option 1"> Option 1</li>
+                                          <li data-value="Option 2"> Option 2</li>
+                                          <li data-value="Option 3"> Option 3</li>
+                                          <li data-value="Option 4"> Option 4</li>
+                                        </ul>
+                                      </div>
+                                      <!-- status -->
+                                    <div class="status custom-select">
+                                        <div class="select-header">
+                                            <i class="bi bi-activity me-1"></i><span>Select status</span>
+                                          <i class="bi bi-chevron-down ms-1"></i>
+                                        </div>
+                                        <ul class="select-options shadow-lg mt-2">
+                                          <li data-value="Open"> Open</li>
+                                          <li data-value="Closed"> Closed</li>
+                                          <li data-value="Pending" class="selected"> Pending</li>
+                                          <li data-value="Resolved"> Resolved</li>
+                                          <li data-value="Stuck"> Stuck</li>
+                                        </ul>
+                                      </div>
+                                      
+                            </form>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ticket card p-3 mb-2">
+                        <div class="d-flex align-items-center">
+                            <div class="ticket_issue_wrapper d-flex align-items-center w-75">
+                                <input class="form-check-input checkbox me-3" type="checkbox" value="" id="todo_item_1">
+                                <img src="/Catalyst/images/g5GGSDC.png" alt="" class="ticket_user_image me-3">
+                                <div class="ticket_issue w-100">
+                                    <p class="mb-1"><span class="badge_warning ticket_status rounded px-1 small">Pending</span></p>
+                                    <h6 class="mb-1">Recieved a broken TV</h6>
+                                    <p class="m-0 small text-secondary">
+                                        <div class="bi bi-envelope d-inline-block pe-2 border-end ticket_user position-relative">
+                                            Sarah James
+                                            <div class="ticket_user_card card position-absolute">
+                                                <div class="card-body d-flex align-items-center">
+                                                    <img src="/Catalyst/images/g5GGSDC.png" alt="" class="ticket_user_image me-3">
+                                                    <div class="ticket_user_details pb-2">
+                                                        <h5 class="username fw-bold">User Name</h5>
+                                                        <a href="" class="small">View tickets</a>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="user_email_wrapper">
+                                                        <a href="" class="small text-muted">
+                                                            <i class="bi bi-envelope me-2"></i>
+                                                            user.name@email.com
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="created_on">Created 4 days ago</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="ticket_options w-25">
+                                <div class="issue issue-3">
+
+                                    <!-- priority -->
+                                    <div class="priority custom-select">
+                                        <div class="select-header">
+                                            <span><i class="priority_icon bg-secondary me-1"></i>Select priority</span>
+                                          <i class="bi bi-chevron-down ms-1"></i>
+                                        </div>
+                                        <ul class="select-options shadow-lg mt-2">
+                                          <li data-value="Low"><span class="priority_icon icon bg-success"></span> Low</li>
+                                          <li data-value="Medium""><span class="priority_icon icon bg-primary"></span> Medium</li>
+                                          <li data-value="High"><span class="priority_icon icon bg-warning"></span> High</li>
+                                          <li data-value="Urgent" class="selected"><span class="priority_icon icon bg-danger"></span> Urgent</li>
+                                        </ul>
+                                      </div>
+
+
+                                      <!-- Customer satisfaction -->
+                                    <div class="customer_satisfaction custom-select">
+                                        <div class="select-header">
+                                            <i class="bi bi-person-plus me-1"></i><span>Select satisfaction</span>
+                                          <i class="bi bi-chevron-down ms-1"></i>
+                                        </div>
+                                        <ul class="select-options shadow-lg mt-2">
+                                          <li data-value="Option 1"> Option 1</li>
+                                          <li data-value="Option 2"> Option 2</li>
+                                          <li data-value="Option 3"> Option 3</li>
+                                          <li data-value="Option 4"> Option 4</li>
+                                        </ul>
+                                      </div>
+                                      <!-- status -->
+                                    <div class="status custom-select">
+                                        <div class="select-header">
+                                            <i class="bi bi-activity me-1"></i><span>Select status</span>
+                                          <i class="bi bi-chevron-down ms-1"></i>
+                                        </div>
+                                        <ul class="select-options shadow-lg mt-2">
+                                          <li data-value="Open"> Open</li>
+                                          <li data-value="Closed"> Closed</li>
+                                          <li data-value="Pending" class="selected"> Pending</li>
+                                          <li data-value="Resolved"> Resolved</li>
+                                          <li data-value="Stuck"> Stuck</li>
+                                        </ul>
+                                      </div>
+                                      
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ticket card p-3 mb-2">
+                        <div class="d-flex align-items-center">
+                            <div class="ticket_issue_wrapper d-flex align-items-center w-75">
+                                <input class="form-check-input checkbox me-3" type="checkbox" value="" id="todo_item_1">
+                                <img src="/Catalyst/images/g5GGSDC.png" alt="" class="ticket_user_image me-3">
+                                <div class="ticket_issue w-100">
+                                    <p class="mb-1"><span class="badge_danger ticket_status rounded px-1 small">Overdue</span></p>
+                                    <h6 class="mb-1">Recieved a broken TV</h6>
+                                    <p class="m-0 small text-secondary">
+                                        <div class="bi bi-envelope d-inline-block pe-2 border-end ticket_user position-relative">
+                                            Sarah James
+                                            <div class="ticket_user_card card position-absolute ">
+                                                <div class="card-body d-flex align-items-center">
+                                                    <img src="/Catalyst/images/g5GGSDC.png" alt="" class="ticket_user_image me-3">
+                                                    <div class="ticket_user_details pb-2">
+                                                        <h5 class="username fw-bold">User Name</h5>
+                                                        <a href="" class="small">View tickets</a>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="user_email_wrapper">
+                                                        <a href="" class="small text-muted">
+                                                            <i class="bi bi-envelope me-2"></i>
+                                                            user.name@email.com
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="created_on">Created 4 days ago</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="ticket_options w-25">
+                                <div class="issue issue-4">
+
+                                    <!-- priority -->
+                                    <div class="priority custom-select">
+                                        <div class="select-header">
+                                            <span><i class="priority_icon bg-secondary me-1"></i>Select priority</span>
+                                          <i class="bi bi-chevron-down ms-1"></i>
+                                        </div>
+                                        <ul class="select-options shadow-lg mt-2">
+                                          <li data-value="Low"><span class="priority_icon icon bg-success"></span> Low</li>
+                                          <li data-value="Medium"><span class="priority_icon icon bg-primary"></span> Medium</li>
+                                          <li data-value="High" class="selected"><span class="priority_icon icon bg-warning"></span> High</li>
+                                          <li data-value="Urgent"><span class="priority_icon icon bg-danger"></span> Urgent</li>
+                                        </ul>
+                                      </div>
+
+
+                                      <!-- Customer satisfaction -->
+                                    <div class="customer_satisfaction custom-select">
+                                        <div class="select-header">
+                                            <i class="bi bi-person-plus me-1"></i><span>Select satisfaction</span>
+                                          <i class="bi bi-chevron-down ms-1"></i>
+                                        </div>
+                                        <ul class="select-options shadow-lg mt-2">
+                                          <li data-value="Option 1"> Option 1</li>
+                                          <li data-value="Option 2"> Option 2</li>
+                                          <li data-value="Option 3"> Option 3</li>
+                                          <li data-value="Option 4"> Option 4</li>
+                                        </ul>
+                                      </div>
+                                      <!-- status -->
+                                    <div class="status custom-select">
+                                        <div class="select-header">
+                                            <i class="bi bi-activity me-1"></i><span>Select status</span>
+                                          <i class="bi bi-chevron-down ms-1"></i>
+                                        </div>
+                                        <ul class="select-options shadow-lg mt-2">
+                                          <li data-value="Open"> Open</li>
+                                          <li data-value="Closed"> Closed</li>
+                                          <li data-value="Pending" class="selected"> Pending</li>
+                                          <li data-value="Resolved"> Resolved</li>
+                                          <li data-value="Stuck"> Stuck</li>
+                                        </ul>
+                                      </div>
+                                      
+                            </form>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ticket card p-3 mb-2">
+                        <div class="d-flex align-items-center">
+                            <div class="ticket_issue_wrapper d-flex align-items-center w-75">
+                                <input class="form-check-input me-3 checkbox" type="checkbox" value="" id="todo_item_1">
+                                <img src="/Catalyst/images/g5GGSDC.png" alt="" class="ticket_user_image me-3">
+                                <div class="ticket_issue w-100">
+                                    <p class="mb-1"><span class="badge_secondary ticket_status rounded px-1 small">On Hold</span></p>
+                                    <h6 class="mb-1">Recieved a broken TV</h6>
+                                    <p class="m-0 small text-secondary">
+                                        <div class="bi bi-envelope d-inline-block pe-2 border-end ticket_user position-relative">
+                                            Sarah James
+                                            <div class="ticket_user_card card position-absolute ">
+                                                <div class="card-body d-flex align-items-center">
+                                                    <img src="/Catalyst/images/g5GGSDC.png" alt="" class="ticket_user_image me-3">
+                                                    <div class="ticket_user_details pb-2">
+                                                        <h5 class="username fw-bold">User Name</h5>
+                                                        <a href="" class="small">View tickets</a>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="user_email_wrapper">
+                                                        <a href="" class="small text-muted">
+                                                            <i class="bi bi-envelope me-2"></i>
+                                                            user.name@email.com
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="created_on">Created 4 days ago</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="ticket_options w-25">
+                                <div class="issue issue-5">
+
+                                    <!-- priority -->
+                                    <div class="priority custom-select">
+                                        <div class="select-header">
+                                            <span><i class="priority_icon bg-secondary me-1"></i>Select priority</span>
+                                          <i class="bi bi-chevron-down ms-1"></i>
+                                        </div>
+                                        <ul class="select-options shadow-lg mt-2">
+                                          <li data-value="Low"><span class="priority_icon icon bg-success"></span> Low</li>
+                                          <li data-value="Medium" class="selected"><span class="priority_icon icon bg-primary"></span> Medium</li>
+                                          <li data-value="High"><span class="priority_icon icon bg-warning"></span> High</li>
+                                          <li data-value="Urgent"><span class="priority_icon icon bg-danger"></span> Urgent</li>
+                                        </ul>
+                                      </div>
+
+
+                                      <!-- Customer satisfaction -->
+                                    <div class="customer_satisfaction custom-select">
+                                        <div class="select-header">
+                                            <i class="bi bi-person-plus me-1"></i><span>Select satisfaction</span>
+                                          <i class="bi bi-chevron-down ms-1"></i>
+                                        </div>
+                                        <ul class="select-options shadow-lg mt-2">
+                                          <li data-value="Option 1"> Option 1</li>
+                                          <li data-value="Option 2"> Option 2</li>
+                                          <li data-value="Option 3"> Option 3</li>
+                                          <li data-value="Option 4"> Option 4</li>
+                                        </ul>
+                                      </div>
+                                      <!-- status -->
+                                    <div class="status custom-select">
+                                        <div class="select-header">
+                                            <i class="bi bi-activity me-1"></i><span>Select status</span>
+                                          <i class="bi bi-chevron-down ms-1"></i>
+                                        </div>
+                                        <ul class="select-options shadow-lg mt-2">
+                                          <li data-value="Open"> Open</li>
+                                          <li data-value="Closed"> Closed</li>
+                                          <li data-value="Pending" class="selected"> Pending</li>
+                                          <li data-value="Resolved"> Resolved</li>
+                                          <li data-value="Stuck"> Stuck</li>
+                                        </ul>
+                                      </div>
+                                      
+                            </form>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ticket card p-3 mb-2">
+                        <div class="d-flex align-items-center">
+                            <div class="ticket_issue_wrapper d-flex align-items-center w-75">
+                                <input class="form-check-input me-3 checkbox" type="checkbox" value="" id="todo_item_1">
+                                <img src="/Catalyst/images/g5GGSDC.png" alt="" class="ticket_user_image me-3">
+                                <div class="ticket_issue w-100">
+                                    <p class="mb-1"><span class="badge_info ticket_status rounded px-1 small">Unassigned</span></p>
+                                    <h6 class="mb-1">Recieved a broken TV</h6>
+                                    <p class="m-0 small text-secondary">
+                                        <div class="bi bi-envelope d-inline-block pe-2 border-end ticket_user position-relative">
+                                            Sarah James
+                                            <div class="ticket_user_card card position-absolute ">
+                                                <div class="card-body d-flex align-items-center">
+                                                    <img src="/Catalyst/images/g5GGSDC.png" alt="" class="ticket_user_image me-3">
+                                                    <div class="ticket_user_details pb-2">
+                                                        <h5 class="username fw-bold">User Name</h5>
+                                                        <a href="" class="small">View tickets</a>
+                                                    </div>
+                                                </div>
+                                                <div class="card-footer">
+                                                    <div class="user_email_wrapper">
+                                                        <a href="" class="small text-muted">
+                                                            <i class="bi bi-envelope me-2"></i>
+                                                            user.name@email.com
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <span class="created_on">Created 4 days ago</span>
+                                    </p>
+                                </div>
+                            </div>
+                            <div class="ticket_options w-25">
+                                <div class="issue issue-6">
+
+                                    <!-- priority -->
+                                    <div class="priority custom-select">
+                                        <div class="select-header">
+                                            <span><i class="priority_icon bg-secondary me-1"></i>Select priority</span>
+                                          <i class="bi bi-chevron-down ms-1"></i>
+                                        </div>
+                                        <ul class="select-options shadow-lg mt-2">
+                                          <li data-value="Low"><span class="priority_icon icon bg-success"></span> Low</li>
+                                          <li data-value="Medium"><span class="priority_icon icon bg-primary"></span> Medium</li>
+                                          <li data-value="High" class="selected"><span class="priority_icon icon bg-warning"></span> High</li>
+                                          <li data-value="Urgent"><span class="priority_icon icon bg-danger"></span> Urgent</li>
+                                        </ul>
+                                      </div>
+
+
+                                      <!-- Customer satisfaction -->
+                                    <div class="customer_satisfaction custom-select">
+                                        <div class="select-header">
+                                            <i class="bi bi-person-plus me-1"></i><span>Select satisfaction</span>
+                                          <i class="bi bi-chevron-down ms-1"></i>
+                                        </div>
+                                        <ul class="select-options shadow-lg mt-2">
+                                          <li data-value="Option 1"> Option 1</li>
+                                          <li data-value="Option 2"> Option 2</li>
+                                          <li data-value="Option 3"> Option 3</li>
+                                          <li data-value="Option 4"> Option 4</li>
+                                        </ul>
+                                      </div>
+                                      <!-- status -->
+                                    <div class="status custom-select">
+                                        <div class="select-header">
+                                            <i class="bi bi-activity me-1"></i><span>Select status</span>
+                                          <i class="bi bi-chevron-down ms-1"></i>
+                                        </div>
+                                        <ul class="select-options shadow-lg mt-2">
+                                          <li data-value="Open"> Open</li>
+                                          <li data-value="Closed"> Closed</li>
+                                          <li data-value="Pending" class="selected"> Pending</li>
+                                          <li data-value="Resolved"> Resolved</li>
+                                          <li data-value="Stuck"> Stuck</li>
+                                        </ul>
+                                      </div>
+                                      
+                            </form>
+                            </div>
+                            </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <div id="right_sidebar" class="card justify-content-between p-3 overflow-auto" style="width:300px;">
+                    <div class="filters_wrapper">
+                    <h6 class="small fw-bold">FILTERS</h6>
+                    <form action="">
+                        <div class="mb-3">
+                            <label for="select_agent" class="small">Agents</label>
+                        <select name="" id="select_agent" class="form-select form-select-sm">
+                            <option value="">--Select Agent--</option>
+                            <option value="">Agent 1</option>
+                            <option value="">Agent 2</option>
+                        </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="select_creation" class="small">Created</label>
+                        <select name="" id="select_creation" class="form-select form-select-sm">
+                            <option value="">--Select creation period--</option>
+                            <option value="">Last 30 days</option>
+                            <option value="">option 2</option>
+                        </select>
+                        </div>
+                       <div class="mb-3">
+                        <label for="select_creation" class="small">Created</label>
+                        <select name="" id="select_creation" class="form-select form-select-sm">
+                            <option value="">--Select creation period--</option>
+                            <option value="">Last 30 days</option>
+                            <option value="">option 2</option>
+                        </select>
+                       </div>
+                        <div class="mb-3">
+                            <label for="select_resolved" class="small">Resolved at</label>
+                        <select name="" id="select_resolved" class="form-select form-select-sm">
+                            <option value="">--Select Resolve Period--</option>
+                            <option value="">Anytime</option>
+                            <option value="">option 2</option>
+                        </select>
+                        </div>
+                    </form>
+                    </div>
+                    <div class="apply_btn_wrapper bottom-0">
+                        <a href="" class="btn btn-sm btn-secondary w-100">Apply</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    </div>
+    </section>
+
+    
+    <script>
+      // sidebar for ticket list
+    $(document).ready(function(){
+            $("#toggle_right_sidebar").click(function(){
+            $("#right_sidebar").toggle();
+            $(this).toggleClass("bi-box-arrow-in-left bi-box-arrow-in-right");
+            });
+
+            // actions button if any check box selected
+            $('#masterCheckbox').on('click', function() {
+            $('.checkbox').prop('checked', this.checked);
+            });
+            $('.checkbox').change(function() {
+        
+              if ($('.checkbox:checked').length > 0){
+              $('.sort_check_wrapper').hide();
+              $('.actions_wrapper').show();
+          } else {
+              $('.sort_check_wrapper').show();
+              $('.actions_wrapper').hide();
+            }
+          });
+
+});
+
+// custom select box and storing values in array
+$(document).ready(function() {
+  const selectedValues = {};
+
+  $('.custom-select').on('click', function(event) {
+    $(this).toggleClass('active');
+    event.stopPropagation();
+  });
+
+  $('.custom-select .select-options li').on('click', function(event) {
+    const selectedOption = $(this).attr('data-value');
+    const customSelect = $(this).closest('.custom-select');
+    const issueClass = customSelect.closest('.issue').attr('class').split(' ')[1]; // Get the issue class
+    
+    customSelect.find('.select-header span').html($(this).html());
+    
+    // Store selected value with issue class as identifier
+    if (!selectedValues[issueClass]) {
+      selectedValues[issueClass] = {};
+    }
+    
+    const selectBoxClass = customSelect.attr('class').split(' ').filter(className => className !== 'custom-select')[0];
+    if (!selectedValues[issueClass][selectBoxClass]) {
+      selectedValues[issueClass][selectBoxClass] = [];
+    }
+    
+    selectedValues[issueClass][selectBoxClass] = [selectedOption]; // Update the array with the new value
+    
+    console.log(selectedValues);
+    
+    // Close the select box automatically
+    customSelect.removeClass('active');
+    event.stopPropagation();
+  });
+
+  $(document).on('click', function(event) {
+    if (!$(event.target).closest('.custom-select').length) {
+      $('.custom-select').removeClass('active');
+    }
+  });
+  
+  // Set default selected options
+  $('.custom-select .select-options li.selected').each(function() {
+    const defaultOption = $(this).attr('data-value');
+    const iconElement = $(this).find('.icon');
+    const iconHtml = iconElement.length ? iconElement.prop('outerHTML') + " " : ""; // Check if icon exists
+    const customSelect = $(this).closest('.custom-select');
+    const headerSpan = customSelect.find('.select-header span');
+    headerSpan.html(iconHtml + defaultOption); // Include the icon HTML
+    
+    const issueClass = customSelect.closest('.issue').attr('class').split(' ')[1]; // Get the issue class
+    const selectBoxClass = customSelect.attr('class').split(' ').filter(className => className !== 'custom-select')[0];
+    
+    if (!selectedValues[issueClass]) {
+      selectedValues[issueClass] = {};
+    }
+    selectedValues[issueClass][selectBoxClass] = [defaultOption];
+  });
+});
+
+
+
+      </script>
+</body>
+</html>
